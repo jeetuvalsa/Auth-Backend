@@ -38,7 +38,33 @@ PORT=3000
 ```
 
 ### Database Setup
-TODO: Add instructions for setting up the database schema.
+### Initialize Sequelize
+```bash
+npx sequelize-cli init
+```
+
+### Configure Sequelize
+Update the config/config.json file with your database configuration
+
+### Generate a Model and Migration
+An example: User model with firstName, lastName, and email attributes.
+```bash
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+```
+### Run Migrations
+```bash
+npx sequelize-cli db:migrate
+```
+
+### Undo Migrations (last migration)
+```bash
+npx sequelize-cli db:migrate:undo
+```
+
+### Undo All Migrations
+```bash
+npx sequelize-cli db:migrate:undo:all
+```
 
 #### Run Project
 
