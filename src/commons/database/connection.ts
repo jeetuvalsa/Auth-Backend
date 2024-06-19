@@ -1,12 +1,15 @@
-import { Pool } from 'pg';
+import pkg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-export class DatabaseConnection {
-  private static pool: Pool;
+const { Pool } = pkg;
+type PoolType = typeof Pool;
 
-  static getInstance(): Pool {
+export class DatabaseConnection {
+  private static pool: InstanceType<PoolType>;
+
+  static getInstance(): InstanceType<PoolType> {
     if (!DatabaseConnection.pool) {
       DatabaseConnection.pool = new Pool({
         user: process.env.DB_USER,
