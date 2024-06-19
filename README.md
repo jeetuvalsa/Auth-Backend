@@ -47,5 +47,8 @@ yarn dev
 ```
 The server will start on the port specified in your .env file (default is 3000).
 
+### API Documentation (Swagger)
+You can access the Swagger documentation to explore and test the API endpoints.
 
+Swagger UI: ```http://localhost:3000/api-docs```
 

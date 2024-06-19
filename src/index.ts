@@ -3,7 +3,7 @@ dotenv.config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
-import apiRoutes from './routes/api-routes';
+import apiRoutes from './routes/example-routes';
 import userRoutes from './routes/user-routes';
 import { setupSwagger } from "./swagger";
 
