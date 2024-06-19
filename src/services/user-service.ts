@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { DatabaseConnection } from '../commons/database/connection';
+import { DatabaseConnection } from '../commons/database/connection.js';
 
 interface User {
   id: number;
