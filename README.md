@@ -2,6 +2,21 @@
 
 This is a boilerplate project for a Node.js application using TypeScript, Express, and PostgreSQL.
 
+## Features
+
+- **TypeScript**: Write clean and robust code using TypeScript, a statically typed superset of JavaScript.
+- **Express**: Fast, unopinionated, minimalist web framework for Node.js.
+- **PostgreSQL**: Powerful, open-source object-relational database system.
+- **Sequelize ORM**: Easy-to-use ORM for interacting with PostgreSQL.
+- **Environment Configuration**: Manage environment variables using dotenv.
+- **ESLint**: Ensure code quality with ESLint.
+- **Prettier**: Maintain code style consistency using Prettier.
+- **Swagger**: Automatically generate API documentation.
+- **Nodemon**: Monitor changes in your source and automatically restart the server.
+- **Ts-node**: Run TypeScript code directly without precompiling.
+- **API Error Handling**: Centralized error handling mechanism.
+- **Project Structure**: Organized project structure for scalability and maintainability.
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
