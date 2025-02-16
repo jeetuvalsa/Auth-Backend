@@ -1,34 +1,28 @@
-import dotenv from 'dotenv';
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import userRoute from "./routes/user.route";
+import connectDB from "./utils/db";
+
 dotenv.config();
-import express from 'express';
-import bodyParser from 'body-parser';
-import apiRoutes from './routes/example-routes.js';
-import userRoutes from './routes/user-routes.js';
-import { setupSwagger } from './swagger.js';
-import { errorHandler } from './middleware/error-handler.js';
-import { db } from './models/index.js';
 
-const app: express.Express = express();
-const port: string | number = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use('/api', apiRoutes);
-app.use('/api', userRoutes);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-setupSwagger(app);
+app.use("/api/users", userRoute);
 
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
+app.get("/", (req, res) => {
+  res.send("Hello, TypeScript + Node.js!");
 });
 
-app.use(errorHandler);
-
-db.sequelize.sync().then(() => {
-  if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  }
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}).catch((error) => {
+  console.log(error);
 });
-
-export default app;
