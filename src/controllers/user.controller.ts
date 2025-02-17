@@ -27,6 +27,7 @@ const registerUser = async (req: Request, res: Response) => {
 
     return res.status(201).json({
       message: "User registered successfully",
+      status: 201,
       user: {
         id: user._id,
         email: user.email,
@@ -61,6 +62,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       message: "Login successful",
+      status: 200,
       user: {
         refreshToken: userRefreshToken,
         accessToken: userAccessToken,

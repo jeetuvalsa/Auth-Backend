@@ -6,7 +6,7 @@ const refreshToken = (userId: string | ObjectId | JwtPayload) => {
 };
 
 const accessToken = (userId: string | ObjectId | JwtPayload) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '15m' });
+  return jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '15s' });
 };
 
 export { refreshToken, accessToken };
