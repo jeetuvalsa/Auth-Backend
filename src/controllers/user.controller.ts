@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/user.model';
 import bcrypt from 'bcrypt';
 import { accessToken, refreshToken } from '../utils/token';
+import jwt from 'jsonwebtoken';
 const registerUser = async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
@@ -66,6 +67,7 @@ const loginUser = async (req: Request, res: Response) => {
       user: {
         refreshToken: userRefreshToken,
         accessToken: userAccessToken,
+        expiresIn: 15 * 60 * 1000,
         id: user._id,
         email: user.email,
         name: user.name
@@ -77,7 +79,29 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-
+const userRefreshToken = async (req: Request, res: Response) => {
+  const token = req.body.refreshToken;
+  if (!token) {
+    return res.status(400).json({ message: "Refresh token is required" });
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+  if (!decoded) {
+    return res.status(400).json({ message: "Invalid refresh token" });
+  }
+  const user = await User.findById((decoded as { userId: string }).userId);
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
+  }
+  const userRefreshToken = refreshToken(user._id);
+  const userAccessToken = accessToken(user._id);
+  return res.status(200).json({
+    message: "Refresh token successful",
+    status: 200,
+    refreshToken: userRefreshToken,
+    accessToken: userAccessToken,
+    expiresIn: 15 * 60 * 1000,
+  });
+};
 const getUser = async (req: Request, res: Response) => {
   const userId = req.userId;
   const refreshToken = req.refreshToken;
@@ -97,5 +121,5 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export { registerUser, loginUser, getUser };
+export { registerUser, loginUser, getUser, userRefreshToken };
 
