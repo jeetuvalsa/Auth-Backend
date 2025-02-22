@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import User from '../models/user.model';
-import bcrypt from 'bcrypt';
-import { accessToken, refreshToken } from '../utils/token';
-import jwt from 'jsonwebtoken';
+import { Request, Response } from "express";
+import User from "../models/user.model";
+import bcrypt from "bcrypt";
+import { accessToken, refreshToken } from "../utils/token";
+import jwt from "jsonwebtoken";
 const registerUser = async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
@@ -32,8 +32,8 @@ const registerUser = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         email: user.email,
-        name: user.name
-      }
+        name: user.name,
+      },
     });
   } catch (error) {
     console.error("Error in registerUser:", error);
@@ -53,7 +53,7 @@ const loginUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-    
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid password" });
@@ -70,8 +70,8 @@ const loginUser = async (req: Request, res: Response) => {
         expiresIn: 15 * 60 * 1000,
         id: user._id,
         email: user.email,
-        name: user.name
-      }
+        name: user.name,
+      },
     });
   } catch (error) {
     console.error("Error in loginUser:", error);
@@ -92,12 +92,11 @@ const userRefreshToken = async (req: Request, res: Response) => {
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
-  const userRefreshToken = refreshToken(user._id);
   const userAccessToken = accessToken(user._id);
   return res.status(200).json({
     message: "Refresh token successful",
     status: 200,
-    refreshToken: userRefreshToken,
+    refreshToken: token,
     accessToken: userAccessToken,
     expiresIn: 15 * 60 * 1000,
   });
@@ -122,4 +121,3 @@ const getUser = async (req: Request, res: Response) => {
 };
 
 export { registerUser, loginUser, getUser, userRefreshToken };
-
